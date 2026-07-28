@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1032.0" style="-fx-background-color: #F3F5FA;" stylesheets="@../../css/user/TableUser.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.japs.frontend.bodyfitgym.controllers.user.UserCreateViewController">
+   <children>
+      <Pane layoutX="20.0" layoutY="107.0" prefHeight="365.0" prefWidth="993.0" style="-fx-background-color: #FFFFFF;" styleClass="paneUserRegistration">
+         <children>
+            <Label layoutX="24.0" layoutY="16.0" text="Nuevo Usuario">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Line endX="885.0" layoutX="108.0" layoutY="52.0" startX="-108.0" stroke="#d3cece" strokeWidth="0.5" />
+            <TextField layoutX="25.0" layoutY="101.0" prefHeight="25.0" prefWidth="300.0" promptText="Ej: Andres Camilo" styleClass="txtField" />
+            <Label layoutX="25.0" layoutY="80.0" styleClass="formLabel" text="Nombres" />
+            <TextField layoutX="340.0" layoutY="101.0" prefHeight="25.0" prefWidth="300.0" promptText="Ej: Vargas Tarazona" styleClass="txtField" />
+            <Label layoutX="341.0" layoutY="80.0" styleClass="formLabel" text="Apellidos" />
+            <TextField layoutX="25.0" layoutY="174.0" prefHeight="25.0" prefWidth="300.0" promptText="123456789" styleClass="txtField" />
+            <Label layoutX="25.0" layoutY="153.0" styleClass="formLabel" text="Documento" />
+            <Label layoutX="341.0" layoutY="153.0" styleClass="formLabel" text="Contraseña" />
+            <TextField layoutX="653.0" layoutY="101.0" prefWidth="300.0" promptText="Ej: vcamilo" styleClass="txtField" />
+            <Label layoutX="654.0" layoutY="80.0" styleClass="formLabel" text="Usuario" />
+            <PasswordField layoutX="340.0" layoutY="174.0" prefHeight="25.0" prefWidth="300.0" promptText="admin123" styleClass="txtField" />
+            <Line endX="852.0" layoutX="124.0" layoutY="234.0" startX="-108.0" stroke="#d3cece" strokeWidth="0.5" />
+            <Button layoutX="895.0" layoutY="247.0" mnemonicParsing="false" prefWidth="82.0" style="-fx-background-color: #DCFCE7;" text="Guardar" textFill="#15803d">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="btnForm" />
+                  <String fx:value="btnSave" />
+               </styleClass>
+            </Button>
+            <Button layoutX="713.0" layoutY="247.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-color: #F3F5FA;" text="Cancelar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="btnForm" />
+                  <String fx:value="btnCancel" />
+               </styleClass>
+            </Button>
+            <Button layoutX="804.0" layoutY="247.0" mnemonicParsing="false" prefWidth="82.0" style="-fx-background-color: #FEE2E2;" text="Limpiar" textFill="#dc2626">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="btnForm" />
+                  <String fx:value="btnClean" />
+               </styleClass>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutY="-1.0" prefHeight="77.0" prefWidth="1032.0" style="-fx-background-color: #FFFFFF;" styleClass="paneSearch">
+         <children>
+            <Label layoutX="18.0" layoutY="7.0" style="-fx-text-fill: black;" text="Usuarios">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="45.0" text="Administra el personal del sistema" textFill="#94a3b8">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>

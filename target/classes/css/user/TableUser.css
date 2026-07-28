@@ -1,0 +1,194 @@
+/* ===== CONTENEDOR GENERAL DE LA TABLA ===== */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-background-radius: 0 0 10 10; /* top-left top-right bottom-right bottom-left */
+    -fx-border-radius: 0 0 10 10;
+    -fx-table-cell-border-color: transparent;
+}
+
+/* ===== ENCABEZADO (HEADER) ===== */
+.table-view .column-header-background {
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 0; /* header cuadrado, sin redondeo */
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: transparent transparent #E0E0E0 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-size: 42px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #4A4A4A;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 0 12 0 12;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Ícono de ordenar (flechita) */
+.table-view .column-header .arrow {
+    -fx-background-color: #2ECC71;
+}
+
+/* Línea vertical sutil entre columnas del header */
+.table-view .column-header {
+    -fx-border-color: transparent #EDEDED transparent transparent;
+    -fx-border-width: 0 1 1 0;
+}
+
+/* ===== FILAS ===== */
+.table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #EDEDED transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+/* Sin efecto zebra, todo blanco (más "delicado") */
+.table-row-cell:odd {
+    -fx-background-color: #F8FAFC;
+}
+
+/* Hover sobre fila */
+.table-row-cell:hover {
+    -fx-background-color: #F5F5F5;
+}
+
+/* Fila seleccionada */
+.table-row-cell:selected {
+    -fx-background-color: #E8F8F0;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #1B7A43;
+}
+
+/* ===== CELDAS ===== */
+.table-cell {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-padding: 10 12 10 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: transparent;
+}
+
+/* ===== SCROLLBAR ===== */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #D5D5D5;
+    -fx-background-radius: 5;
+}
+
+.table-view .scroll-bar .thumb:hover {
+    -fx-background-color: #2ECC71;
+}
+
+/* ===== PLACEHOLDER (tabla vacía) ===== */
+.table-view .placeholder .label {
+    -fx-text-fill: #AAAAAA;
+    -fx-font-size: 14px;
+}
+.paneSearch{
+    -fx-background-radius: 12 12 0 0;
+    -fx-border-radius: 12 12 0 0;
+}
+.paneUserRegistration{
+    -fx-background-radius: 12 12 12 12;
+    -fx-border-radius: 12 12 12 12;
+}
+.txtField {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-prompt-text-fill: #AAAAAA;
+}
+
+/* Cuando el usuario hace clic / está escribiendo */
+.txtField:focused {
+    -fx-border-color: #2ECC71;
+    -fx-border-width: 1.5;
+    -fx-background-color: #FFFFFF;
+}
+
+/* Al pasar el mouse por encima (antes de hacer clic) */
+.txtField:hover {
+    -fx-border-color: #B8B8B8;
+}
+
+/* Si el campo está deshabilitado */
+.txtField:disabled {
+    -fx-background-color: #F5F5F5;
+    -fx-text-fill: #AAAAAA;
+    -fx-border-color: #E8E8E8;
+}
+
+.formLabel{
+    -fx-text-fill: #4A4A4A;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 0 0 4 2;
+}
+.btnForm {
+    -fx-background-radius: 6;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* ===== GUARDAR (verde) ===== */
+.btnSave {
+    -fx-background-color: #DCFCE7;
+    -fx-text-fill: #15803D;
+}
+
+.btnSave:hover {
+    -fx-background-color: #BBF7D0;
+}
+
+.btnSave:pressed {
+    -fx-background-color: #86EFAC;
+}
+
+/* ===== CANCELAR (gris) ===== */
+.btnCancel{
+    -fx-background-color: #F3F5FA;
+    -fx-text-fill: #4B5563;
+}
+
+.btnCancel:hover {
+    -fx-background-color: #E5E7EB;
+}
+
+.btnCancel:pressed {
+    -fx-background-color: #D1D5DB;
+}
+
+/* ===== LIMPIAR (rojo) ===== */
+.btnClean{
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #DC2626;
+}
+
+.btnClean:hover {
+    -fx-background-color: #FECACA;
+}
+
+.btnClean:pressed {
+    -fx-background-color: #FCA5A5;
+}

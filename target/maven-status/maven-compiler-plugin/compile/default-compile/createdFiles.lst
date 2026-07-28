@@ -1,0 +1,11 @@
+com\japs\frontend\bodyfitgym\controllers\user\UserCreateViewController.class
+com\japs\frontend\bodyfitgym\services\UserService.class
+com\japs\frontend\bodyfitgym\services\UserService$2.class
+com\japs\frontend\bodyfitgym\controllers\main\MainViewController.class
+com\japs\frontend\bodyfitgym\Frontend_BodyFitGym.class
+com\japs\frontend\bodyfitgym\models\User.class
+com\japs\frontend\bodyfitgym\response\PageResponse.class
+com\japs\frontend\bodyfitgym\controllers\user\UserListViewController.class
+com\japs\frontend\bodyfitgym\response\ServiceResponse.class
+com\japs\frontend\bodyfitgym\services\UserService$1.class
+com\japs\frontend\bodyfitgym\utils\ObjectMapperProvider.class
