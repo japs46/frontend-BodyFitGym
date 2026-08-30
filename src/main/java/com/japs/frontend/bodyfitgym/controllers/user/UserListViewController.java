@@ -13,6 +13,7 @@ import com.japs.frontend.bodyfitgym.models.User;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.services.UserService;
+import com.japs.frontend.bodyfitgym.utils.AlertUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,9 +42,9 @@ public class UserListViewController implements Initializable {
     private TableColumn<User, String> statusColumn;
     @FXML
     private TableView<User> userTable;
-    private final ObservableList userList = FXCollections.observableArrayList();
+    private final ObservableList<User> userList = FXCollections.observableArrayList();
     private final UserService userService = new UserService();
-    private MainViewController MainViewController = new MainViewController();
+
     private String currentName = null;
     private String currentUserName = null;
     private String currentDocument = null;
@@ -55,19 +56,36 @@ public class UserListViewController implements Initializable {
     private ComboBox<String> checkBoxFilter;
     @FXML
     private Pagination pagination;
+    @FXML
+    private TableColumn<?, ?> actionsColumn;
+    @FXML
+    private ComboBox<?> filterComboBox;
 
     /**
      * Initializes the controller class.
      */
 
+    private void configureContextMenuStyle() {
+        ContextMenu contextMenu = userTable.getContextMenu();
 
+        if (contextMenu != null) {
+            contextMenu.setOnShowing(event -> {
+                String css = getClass().getResource("/css/user/TableUser.css").toExternalForm();
+                if (!contextMenu.getScene().getStylesheets().contains(css)) {
+                    contextMenu.getScene().getStylesheets().add(css);
+                }
+            });
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pagination.currentPageIndexProperty().addListener((observable)->{
             listUsers(currentName,currentUserName,currentDocument,pagination.getCurrentPageIndex());
         });
         configureColumns();
+        configureContextMenuStyle();
         listUsers(null,null,null,0);
+        configureRowFactory();
     }
     private void configureColumns(){
         userColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -75,6 +93,7 @@ public class UserListViewController implements Initializable {
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        statusColumn.setVisible(false);
     }
     private void listUsers(String name,String userName,String document,int page){
         userList.clear();
@@ -86,6 +105,9 @@ public class UserListViewController implements Initializable {
             userList.addAll(pageResponse.getContent());
             userTable.setItems(userList);
             pagination.setPageCount(pageResponse.getTotalPages());
+        }else{
+            userTable.setItems(userList);
+            pagination.setPageCount(1);
         }
 
     }
@@ -130,6 +152,30 @@ public class UserListViewController implements Initializable {
 
     @FXML
     private void showUserCreateView(ActionEvent event) {
-        MainViewController.cargarVista("/templates/user/UserCreateView.fxml");
+        MainViewController.getInstance().cargarVista("/templates/user/UserCreateView.fxml");
+    }
+
+    @FXML
+    private void mirarId(ActionEvent event) {
+        User seleccionado = userTable.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            System.out.println(seleccionado.getId());
+        } else {
+            AlertUtils.showConfirm("No se pudo eliminar el usuario");
+        }
+    }
+
+    private void configureRowFactory() {
+        userTable.setRowFactory(tv -> {
+            TableRow<User> fila = new TableRow<>();
+
+            fila.setOnContextMenuRequested(event -> {
+                if (!fila.isEmpty()) {
+                    userTable.getSelectionModel().select(fila.getIndex());
+                }
+            });
+
+            return fila;
+        });
     }
 }

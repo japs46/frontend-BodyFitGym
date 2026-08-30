@@ -25,6 +25,13 @@ import javafx.stage.Stage;
  * @author carde
  */
 public class MainViewController implements Initializable {
+
+    private static MainViewController instance;
+
+    public static MainViewController getInstance(){
+        return instance;
+    }
+
     @FXML
     private StackPane stakPane;
 
@@ -34,6 +41,7 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        instance = this;
     }
 
 

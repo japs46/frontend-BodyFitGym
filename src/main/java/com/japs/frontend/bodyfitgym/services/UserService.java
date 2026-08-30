@@ -58,15 +58,15 @@ public class UserService {
         String correlationId = UUID.randomUUID().toString();
 
         logger.info("correlationId: {} ", correlationId);
-
-        HttpResponse<JsonNode> response = Unirest.get(API_URL+"/search")
-                .header("X-Correlation-Id", correlationId)
-                .queryString("name", name)
-                .queryString("userName", userName)
-                .queryString("document", document)
-                .queryString("page", page)
-                .asJson();
         try{
+            HttpResponse<JsonNode> response = Unirest.get(API_URL+"/search")
+                    .header("X-Correlation-Id", correlationId)
+                    .queryString("name", name)
+                    .queryString("userName", userName)
+                    .queryString("document", document)
+                    .queryString("page", page)
+                    .asJson();
+
             ServiceResponse<PageResponse<User>> serviceResponse = ObjectMapperProvider.readValue(
                     response.getBody().toString(),
                     new TypeReference<ServiceResponse<PageResponse<User>>>() {}
@@ -76,7 +76,7 @@ public class UserService {
             logger.info("correlationId: {}, response api: {}", correlationId, serviceResponse.toString());
 
             return serviceResponse;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
 
             ServiceResponse<PageResponse<User>> errorResponse = new ServiceResponse<>();

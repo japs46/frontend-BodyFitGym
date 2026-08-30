@@ -1,7 +1,11 @@
 com\japs\frontend\bodyfitgym\controllers\user\UserCreateViewController.class
+com\japs\frontend\bodyfitgym\controllers\user\UserController.class
 com\japs\frontend\bodyfitgym\services\UserService.class
 com\japs\frontend\bodyfitgym\services\UserService$2.class
+com\japs\frontend\bodyfitgym\utils\AlertUtils.class
 com\japs\frontend\bodyfitgym\controllers\main\MainViewController.class
+com\japs\frontend\bodyfitgym\controllers\user\UserUpdateViewController.class
+com\japs\frontend\bodyfitgym\utils\AlertUtils$1.class
 com\japs\frontend\bodyfitgym\Frontend_BodyFitGym.class
 com\japs\frontend\bodyfitgym\models\User.class
 com\japs\frontend\bodyfitgym\response\PageResponse.class

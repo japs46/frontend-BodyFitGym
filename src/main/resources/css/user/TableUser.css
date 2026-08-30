@@ -117,6 +117,9 @@
     -fx-border-radius: 8;
     -fx-prompt-text-fill: #AAAAAA;
 }
+.comboBoxStatus{
+    -fx-padding: 2 14 2 14;
+}
 
 /* Cuando el usuario hace clic / está escribiendo */
 .txtField:focused {
@@ -191,4 +194,166 @@
 
 .btnClean:pressed {
     -fx-background-color: #FCA5A5;
+}
+
+
+
+/* ===== CONTENEDOR DEL MENÚ ===== */
+.context-menu {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 4);
+}
+
+/* ===== CADA ITEM DEL MENÚ (normal) ===== */
+.context-menu .menu-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-padding: 8 12 8 12;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+}
+
+.context-menu .menu-item:focused,
+.context-menu .menu-item:hover {
+    -fx-background-color: #F0FDF4;
+}
+
+.context-menu .menu-item:focused .label,
+.context-menu .menu-item:hover .label {
+    -fx-text-fill: #15803D;
+}
+
+.context-menu .menu-item .ikonli-font-icon {
+    -fx-icon-color: #7A7A7A;
+}
+
+.context-menu .menu-item:hover .ikonli-font-icon {
+    -fx-icon-color: #2ECC71;
+}
+
+/* ===== ITEM "ELIMINAR" (rojo) ===== */
+.context-menu .menu-item-danger:focused,
+.context-menu .menu-item-danger:hover {
+    -fx-background-color: #FEF2F2;
+}
+
+.context-menu .menu-item-danger:focused .label,
+.context-menu .menu-item-danger:hover .label {
+    -fx-text-fill: #DC2626;
+}
+
+.context-menu .menu-item-danger:hover .ikonli-font-icon {
+    -fx-icon-color: #DC2626;
+}
+
+/* Separador */
+.context-menu .separator .line {
+    -fx-border-color: #EDEDED;
+    -fx-border-width: 1 0 0 0;
+}
+
+.context-menu .menu-item:disabled .label {
+    -fx-text-fill: #C0C0C0;
+}
+
+/* ===== CAMPO DE BÚSQUEDA ===== */
+.search-field {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-prompt-text-fill: #AAAAAA;
+}
+
+.search-field:focused {
+    -fx-border-color: #2ECC71;
+    -fx-border-width: 1.5;
+}
+
+.search-field:hover {
+    -fx-border-color: #B8B8B8;
+}
+
+/* Ícono de lupa dentro del campo */
+.search-icon {
+    -fx-icon-color: #AAAAAA;
+}
+
+/* ===== COMBOBOX DE FILTRO ===== */
+.filter-combo {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 2 8 2 8;
+}
+
+.filter-combo:hover {
+    -fx-border-color: #B8B8B8;
+}
+
+.filter-combo:focused {
+    -fx-border-color: #2ECC71;
+}
+
+/* Celda visible (cerrada) - texto normal, SIN fondo verde */
+.filter-combo .list-cell {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-padding: 4 8 4 8;
+    -fx-background-color: transparent;
+}
+
+.filter-combo .arrow {
+    -fx-background-color: #7A7A7A;
+}
+
+/* Fondo del dropdown */
+.filter-combo .list-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E0;
+    -fx-background-radius: 8;
+}
+
+/* Estas 2 reglas SOLO aplican dentro del dropdown abierto */
+.filter-combo .list-view .list-cell:hover {
+    -fx-background-color: #F0FDF4;
+    -fx-text-fill: #15803D;
+}
+
+.filter-combo .list-view .list-cell:selected {
+    -fx-background-color: #DCFCE7;
+    -fx-text-fill: #15803D;
+}
+
+/* ===== BOTÓN "REGISTRAR USUARIO" ===== */
+.btn-register {
+    -fx-background-color: #45E44A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 8;
+    -fx-padding: 8 18 8 14;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-graphic-text-gap: 6;
+}
+
+.btn-register:hover {
+    -fx-background-color: #3BC940;
+}
+
+.btn-register:pressed {
+    -fx-background-color: #32B037;
 }
