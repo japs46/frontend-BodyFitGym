@@ -6,6 +6,7 @@ import com.japs.frontend.bodyfitgym.models.User;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.utils.ObjectMapperProvider;
+import com.japs.frontend.bodyfitgym.utils.Session;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
@@ -30,6 +31,7 @@ public class UserService {
             HttpResponse<JsonNode> response = Unirest.get(API_URL + "/find-all")
                     .header("Content-Type", "application/json")
                     .header("X-Correlation-Id", correlationId)
+                    .header("Authorization", Session.getAuthorizationHeader())
                     .asJson();
 
             ServiceResponse<List<User>> serviceResponse = ObjectMapperProvider.readValue(
@@ -61,6 +63,7 @@ public class UserService {
         try{
             HttpResponse<JsonNode> response = Unirest.get(API_URL+"/search")
                     .header("X-Correlation-Id", correlationId)
+                    .header("Authorization", Session.getAuthorizationHeader())
                     .queryString("name", name)
                     .queryString("userName", userName)
                     .queryString("document", document)

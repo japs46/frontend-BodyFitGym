@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import com.japs.frontend.bodyfitgym.utils.Session;
+
 /**
  * FXML Controller class
  *
@@ -57,7 +59,8 @@ public class MainViewController implements Initializable {
     @FXML
     private void logOut(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/templates/main/login.fxml"));
+            Session.clear();
+            Parent root = FXMLLoader.load(getClass().getResource("/templates/main/LoginView.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

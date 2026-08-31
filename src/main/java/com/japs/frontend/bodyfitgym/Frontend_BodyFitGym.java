@@ -20,14 +20,11 @@ public class Frontend_BodyFitGym extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/templates/main/MainView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/templates/main/LoginView.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
 
-//        primaryStage.initStyle(StageStyle.TRANSPARENT);
-//        primaryStage.initStyle(StageStyle.DECORATED);
-       primaryStage.initStyle(StageStyle.UNIFIED);
-       // primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.centerOnScreen();
