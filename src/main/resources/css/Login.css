@@ -1,0 +1,26 @@
+.login-txtField {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #BDBDBD transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: #121212;
+}
+.login-txtField:focused{
+    -fx-border-color: transparent transparent #00C853 transparent;
+}
+.login-txtField:hover{
+    -fx-border-color: transparent transparent #00C853 transparent;
+}
+.login-button{
+    -fx-background-color: #00C853;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+.login-button:hover{
+    -fx-opacity: 0.9;
+    -fx-background-color: #00E676;
+     -fx-cursor: hand;
+}
+.btn-Close:hover{
+    -fx-cursor: hand;
+}

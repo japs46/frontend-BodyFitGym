@@ -1,0 +1,17 @@
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/Frontend_BodyFitGym.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/LoginViewController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/main/MainViewController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/user/UserController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/user/UserCreateViewController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/user/UserListViewController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/controllers/user/UserUpdateViewController.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/models/AuthResponse.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/models/LoginRequest.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/models/User.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/response/PageResponse.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/response/ServiceResponse.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/services/AuthService.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/services/UserService.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/utils/AlertUtils.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/utils/ObjectMapperProvider.java
+/Users/jhonathan.penaloza/Documents/Proyectos Personales/Gimnasio/frontend-BodyFitGym/src/main/java/com/japs/frontend/bodyfitgym/utils/Session.java
