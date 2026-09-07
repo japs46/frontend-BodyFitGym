@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import com.japs.frontend.bodyfitgym.controllers.membership.MembershipUpdateViewController;
+import com.japs.frontend.bodyfitgym.models.Membership;
 import com.japs.frontend.bodyfitgym.utils.Session;
 
 /**
@@ -56,6 +58,18 @@ public class MainViewController implements Initializable {
         }
     }
 
+    public void cargarVistaMembershipUpdate(Membership membership) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/membership/MembershipUpdateView.fxml"));
+            Parent vista = loader.load();
+            MembershipUpdateViewController controller = loader.getController();
+            controller.setMembership(membership);
+            stakPane.getChildren().setAll(vista);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void logOut(MouseEvent event) {
         try {
@@ -74,5 +88,10 @@ public class MainViewController implements Initializable {
     @FXML
     private void cambiarVistaUsuario(MouseEvent event) {
         cargarVista("/templates/user/UserListView.fxml");
+    }
+
+    @FXML
+    private void cambiarVistaMembresia(MouseEvent event) {
+        cargarVista("/templates/membership/MembershipListView.fxml");
     }
 }

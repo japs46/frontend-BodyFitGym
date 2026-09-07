@@ -16,16 +16,16 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1032.0" style="-fx-background-color: #F3F5FA;" stylesheets="@../../css/user/TableUser.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.japs.frontend.bodyfitgym.controllers.user.UserListViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1032.0" style="-fx-background-color: #F3F5FA;" stylesheets="@../../css/user/TableUser.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.japs.frontend.bodyfitgym.controllers.membership.MembershipListViewController">
    <children>
       <Pagination fx:id="pagination" layoutX="40.0" layoutY="498.0" prefHeight="59.0" prefWidth="952.0" />
-      <TableView fx:id="userTable" layoutX="39.0" layoutY="197.0" prefHeight="311.0" prefWidth="954.0">
+      <TableView fx:id="membershipTable" layoutX="39.0" layoutY="197.0" prefHeight="311.0" prefWidth="954.0">
         <columns>
-          <TableColumn fx:id="userColumn" prefWidth="89.0" text="Usuario" />
-          <TableColumn fx:id="documentColumn" prefWidth="98.0" text="Documento" />
-            <TableColumn fx:id="nameColumn" prefWidth="83.0" text="Nombre" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="69.0" text="Apellido" />
-            <TableColumn fx:id="statusColumn" prefWidth="77.0" text="Estado" />
+          <TableColumn fx:id="nameColumn" prefWidth="180.0" text="Nombre" />
+            <TableColumn fx:id="durationColumn" prefWidth="150.0" text="Duración" />
+            <TableColumn fx:id="trackingModeColumn" prefWidth="150.0" text="Modo" />
+            <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Precio" />
+            <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Estado" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -33,12 +33,12 @@
          <contextMenu>
             <ContextMenu>
               <items>
-                  <MenuItem mnemonicParsing="false" text="Actualizar">
+                  <MenuItem fx:id="updateMenuItem" mnemonicParsing="false" onAction="#showMembershipUpdateView" text="Actualizar">
                   <graphic>
                       <FontIcon iconLiteral="bi-pencil-square" />
                   </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#mirarId" styleClass="menu-item-danger" text="Eliminar">
+                  <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" onAction="#deleteMembership" styleClass="menu-item-danger" text="Eliminar">
                       <graphic>
                           <FontIcon iconLiteral="bi-trash" />
                       </graphic>
@@ -49,28 +49,18 @@
       </TableView>
       <Pane layoutX="40.0" layoutY="121.0" prefHeight="77.0" prefWidth="952.0" style="-fx-background-color: #FFFFFF;" styleClass="paneSearch">
          <children>
-            <Label layoutX="24.0" layoutY="26.0" text="Usuarios del Sistema">
+            <Label layoutX="24.0" layoutY="26.0" text="Membresías del Gimnasio">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-             <TextField fx:id="fieldSearch" layoutX="464.0" layoutY="23.0" onAction="#searchUser" prefHeight="35.0" prefWidth="150.0" promptText="Buscar..." styleClass="search-field">
+             <TextField fx:id="fieldSearch" layoutX="464.0" layoutY="23.0" onAction="#searchMembership" prefHeight="35.0" prefWidth="150.0" promptText="Buscar por nombre..." styleClass="search-field">
                  <padding>
                      <Insets left="25.0" />
                  </padding>
              </TextField>
 
-             <ComboBox fx:id="filterComboBox" layoutX="622.0" layoutY="22.0" prefHeight="35.0" prefWidth="150.0" promptText="Seleccionar" styleClass="filter-combo">
-                 <items>
-                     <FXCollections fx:factory="observableArrayList">
-                         <String fx:value="Nombre" />
-                         <String fx:value="Usuario" />
-                         <String fx:value="Documento" />
-                     </FXCollections>
-                 </items>
-             </ComboBox>
-
-             <Button layoutX="780.0" layoutY="21.0" mnemonicParsing="false" onAction="#showUserCreateView" prefHeight="35.0" prefWidth="161.0" styleClass="btn-register" text="Registrar Usuario">
+             <Button fx:id="registerButton" layoutX="780.0" layoutY="21.0" mnemonicParsing="false" onAction="#showMembershipCreateView" prefHeight="35.0" prefWidth="161.0" styleClass="btn-register" text="Registrar Membresía">
                  <graphic>
                      <FontIcon iconColor="WHITE" iconLiteral="bi-plus" iconSize="15" />
                  </graphic>
@@ -84,12 +74,12 @@
       </Pane>
       <Pane layoutY="-1.0" prefHeight="77.0" prefWidth="1032.0" style="-fx-background-color: #FFFFFF;" styleClass="paneSearch">
          <children>
-            <Label layoutX="18.0" layoutY="7.0" style="-fx-text-fill: black;" text="Usuarios">
+            <Label layoutX="18.0" layoutY="7.0" style="-fx-text-fill: black;" text="Membresías">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
-            <Label layoutX="18.0" layoutY="45.0" text="Administra el personal del sistema" textFill="#94a3b8">
+            <Label layoutX="18.0" layoutY="45.0" text="Administra el catálogo de planes del gimnasio" textFill="#94a3b8">
                <font>
                   <Font size="13.0" />
                </font>
