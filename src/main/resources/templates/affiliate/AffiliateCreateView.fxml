@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1032.0" style="-fx-background-color: #F3F5FA;" stylesheets="@../../css/user/TableUser.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.japs.frontend.bodyfitgym.controllers.affiliate.AffiliateCreateViewController">
+   <children>
+      <!-- Header superior -->
+      <Pane layoutY="-1.0" prefHeight="77.0" prefWidth="1032.0" style="-fx-background-color: #FFFFFF;" styleClass="paneSearch">
+         <children>
+            <Label layoutX="18.0" layoutY="7.0" style="-fx-text-fill: black;" text="Afiliados">
+               <font><Font size="26.0" /></font>
+            </Label>
+            <Label layoutX="18.0" layoutY="45.0" text="Registrar un nuevo cliente del gimnasio" textFill="#94a3b8">
+               <font><Font size="13.0" /></font>
+            </Label>
+         </children>
+      </Pane>
+
+      <!-- Tarjeta: Información básica -->
+      <Pane layoutX="20.0" layoutY="82.0" prefHeight="232.0" prefWidth="993.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Información básica">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-person-badge" iconSize="16" /></graphic>
+            </Label>
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Identificación *" />
+            <TextField fx:id="identificationField" layoutX="16.0" layoutY="60.0" prefWidth="290.0" promptText="Cédula / identificación" styleClass="txtField" />
+            <Label layoutX="352.0" layoutY="40.0" styleClass="formLabel" text="Primer nombre *" />
+            <TextField fx:id="firstNameField" layoutX="352.0" layoutY="60.0" prefWidth="290.0" promptText="Primer nombre" styleClass="txtField" />
+            <Label layoutX="688.0" layoutY="40.0" styleClass="formLabel" text="Segundo nombre" />
+            <TextField fx:id="middleNameField" layoutX="688.0" layoutY="60.0" prefWidth="290.0" promptText="Segundo nombre" styleClass="txtField" />
+
+            <Label layoutX="16.0" layoutY="100.0" styleClass="formLabel" text="Primer apellido *" />
+            <TextField fx:id="lastNameField" layoutX="16.0" layoutY="120.0" prefWidth="290.0" promptText="Primer apellido" styleClass="txtField" />
+            <Label layoutX="352.0" layoutY="100.0" styleClass="formLabel" text="Segundo apellido" />
+            <TextField fx:id="secondLastNameField" layoutX="352.0" layoutY="120.0" prefWidth="290.0" promptText="Segundo apellido" styleClass="txtField" />
+            <Label layoutX="688.0" layoutY="100.0" styleClass="formLabel" text="Sexo" />
+            <ComboBox fx:id="sexCombo" layoutX="688.0" layoutY="120.0" prefHeight="25.0" prefWidth="290.0" promptText="Seleccionar">
+                <items><FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Masculino" /><String fx:value="Femenino" />
+                </FXCollections></items>
+            </ComboBox>
+
+            <Label layoutX="16.0" layoutY="160.0" styleClass="formLabel" text="Fecha de nacimiento" />
+            <TextField fx:id="birthDateField" layoutX="16.0" layoutY="180.0" prefWidth="290.0" promptText="aaaa-mm-dd" styleClass="txtField" />
+            <Label layoutX="352.0" layoutY="160.0" styleClass="formLabel" text="Ocupación" />
+            <TextField fx:id="occupationField" layoutX="352.0" layoutY="180.0" prefWidth="290.0" promptText="Ocupación" styleClass="txtField" />
+         </children>
+      </Pane>
+
+      <!-- Tarjeta: Contacto -->
+      <Pane layoutX="20.0" layoutY="322.0" prefHeight="172.0" prefWidth="993.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Contacto">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-telephone" iconSize="16" /></graphic>
+            </Label>
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Celular" />
+            <TextField fx:id="mobilePhoneField" layoutX="16.0" layoutY="60.0" prefWidth="290.0" promptText="Teléfono celular" styleClass="txtField" />
+            <Label layoutX="352.0" layoutY="40.0" styleClass="formLabel" text="Teléfono casa" />
+            <TextField fx:id="homePhoneField" layoutX="352.0" layoutY="60.0" prefWidth="290.0" promptText="Teléfono casa" styleClass="txtField" />
+            <Label layoutX="688.0" layoutY="40.0" styleClass="formLabel" text="Email" />
+            <TextField fx:id="emailField" layoutX="688.0" layoutY="60.0" prefWidth="290.0" promptText="correo@ejemplo.com" styleClass="txtField" />
+
+            <Label layoutX="16.0" layoutY="100.0" styleClass="formLabel" text="Dirección" />
+            <TextField fx:id="addressField" layoutX="16.0" layoutY="120.0" prefWidth="290.0" promptText="Dirección" styleClass="txtField" />
+            <Label layoutX="352.0" layoutY="100.0" styleClass="formLabel" text="Barrio" />
+            <TextField fx:id="neighborhoodField" layoutX="352.0" layoutY="120.0" prefWidth="290.0" promptText="Barrio" styleClass="txtField" />
+            <Label layoutX="688.0" layoutY="100.0" styleClass="formLabel" text="Ciudad" />
+            <TextField fx:id="cityField" layoutX="688.0" layoutY="120.0" prefWidth="135.0" promptText="Ciudad" styleClass="txtField" />
+            <Label layoutX="843.0" layoutY="100.0" styleClass="formLabel" text="C. Postal" />
+            <TextField fx:id="postalCodeField" layoutX="843.0" layoutY="120.0" prefWidth="135.0" promptText="C. Postal" styleClass="txtField" />
+         </children>
+      </Pane>
+
+      <!-- Tarjeta: Datos físicos -->
+      <Pane layoutX="20.0" layoutY="502.0" prefHeight="112.0" prefWidth="993.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Datos físicos">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-rulers" iconSize="16" /></graphic>
+            </Label>
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Peso (Kg)" />
+            <TextField fx:id="weightField" layoutX="16.0" layoutY="60.0" prefWidth="180.0" promptText="Kg" styleClass="txtField" />
+            <Label layoutX="208.0" layoutY="40.0" styleClass="formLabel" text="Estatura (m)" />
+            <TextField fx:id="heightField" layoutX="208.0" layoutY="60.0" prefWidth="180.0" promptText="m" styleClass="txtField" />
+            <Label layoutX="400.0" layoutY="40.0" styleClass="formLabel" text="Cintura (cm)" />
+            <TextField fx:id="waistField" layoutX="400.0" layoutY="60.0" prefWidth="180.0" promptText="cm" styleClass="txtField" />
+            <Label layoutX="592.0" layoutY="40.0" styleClass="formLabel" text="Pierna (cm)" />
+            <TextField fx:id="legField" layoutX="592.0" layoutY="60.0" prefWidth="180.0" promptText="cm" styleClass="txtField" />
+            <Label layoutX="784.0" layoutY="40.0" styleClass="formLabel" text="Cadera (cm)" />
+            <TextField fx:id="hipField" layoutX="784.0" layoutY="60.0" prefWidth="180.0" promptText="cm" styleClass="txtField" />
+         </children>
+      </Pane>
+
+      <!-- Botones -->
+      <Button layoutX="713.0" layoutY="620.0" mnemonicParsing="false" onAction="#showAffiliateListView" prefHeight="25.0" prefWidth="82.0" text="Cancelar">
+         <font><Font name="System Bold" size="12.0" /></font>
+         <styleClass><String fx:value="btnForm" /><String fx:value="btnCancel" /></styleClass>
+      </Button>
+      <Button layoutX="804.0" layoutY="620.0" mnemonicParsing="false" onAction="#cleanForm" prefWidth="82.0" text="Limpiar" textFill="#dc2626">
+         <font><Font name="System Bold" size="12.0" /></font>
+         <styleClass><String fx:value="btnClean" /><String fx:value="btnForm" /></styleClass>
+      </Button>
+      <Button fx:id="saveButton" layoutX="895.0" layoutY="620.0" mnemonicParsing="false" onAction="#saveAffiliate" prefWidth="82.0" text="Guardar" textFill="#15803d">
+         <font><Font name="System Bold" size="12.0" /></font>
+         <styleClass><String fx:value="btnForm" /><String fx:value="btnSave" /></styleClass>
+      </Button>
+   </children>
+</Pane>
