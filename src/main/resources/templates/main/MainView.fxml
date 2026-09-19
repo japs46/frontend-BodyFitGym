@@ -75,7 +75,7 @@
                   <FontIcon iconColor="#45e44a" iconLiteral="bi-person-check" />
                </graphic>
             </Label>
-            <Label graphicTextGap="8.0" prefHeight="17.0" prefWidth="156.0" styleClass="btnSections" text="Membresias" textAlignment="CENTER" textFill="WHITE">
+            <Label graphicTextGap="8.0" onMouseClicked="#cambiarVistaMembresia" prefHeight="17.0" prefWidth="156.0" styleClass="btnSections" text="Membresias" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
