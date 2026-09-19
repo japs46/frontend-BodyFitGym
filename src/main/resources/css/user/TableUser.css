@@ -146,6 +146,24 @@
     -fx-font-weight: 600;
     -fx-padding: 0 0 4 2;
 }
+
+/* ===== SECCIONES DEL FORMULARIO (tarjetas del formulario de afiliado) ===== */
+
+/* Tarjeta blanca independiente con sombra */
+.section-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+}
+
+/* Título de cada sección (con ícono) */
+.section-title {
+    -fx-text-fill: #15803D;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-graphic-text-gap: 8;
+}
 .btnForm {
     -fx-background-radius: 6;
     -fx-padding: 8 16 8 16;
