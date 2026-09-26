@@ -53,6 +53,36 @@ public class AffiliateService {
         }
     }
 
+    public ServiceResponse<Affiliate> findById(Long id) {
+        String correlationId = UUID.randomUUID().toString();
+        logger.info("correlationId: {} ", correlationId);
+
+        try {
+            HttpResponse<JsonNode> response = Unirest.get(API_URL + "/find-by-id/" + id)
+                    .header("X-Correlation-Id", correlationId)
+                    .header("Authorization", Session.getAuthorizationHeader())
+                    .asJson();
+
+            ServiceResponse<Affiliate> serviceResponse = ObjectMapperProvider.readValue(
+                    response.getBody().toString(),
+                    new TypeReference<ServiceResponse<Affiliate>>() {}
+            );
+            serviceResponse.setCode(response.getStatus());
+
+            logger.info("correlationId: {}, response api: {}", correlationId, serviceResponse.toString());
+
+            return serviceResponse;
+        } catch (Exception e) {
+            logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
+
+            ServiceResponse<Affiliate> errorResponse = new ServiceResponse<>();
+            errorResponse.setCode(500);
+            errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
+
+            return errorResponse;
+        }
+    }
+
     public ServiceResponse<Affiliate> save(Affiliate affiliate) {
         String correlationId = UUID.randomUUID().toString();
         logger.info("correlationId: {} ", correlationId);

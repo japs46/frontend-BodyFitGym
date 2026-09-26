@@ -30,6 +30,11 @@
          <contextMenu>
             <ContextMenu>
               <items>
+                  <MenuItem fx:id="detailMenuItem" mnemonicParsing="false" onAction="#showAffiliateDetail" text="Ver detalles">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-eye" />
+                  </graphic>
+                  </MenuItem>
                   <MenuItem fx:id="updateMenuItem" mnemonicParsing="false" onAction="#showAffiliateUpdateView" text="Actualizar">
                   <graphic>
                       <FontIcon iconLiteral="bi-pencil-square" />
