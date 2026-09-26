@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="760.0" style="-fx-background-color: #F3F5FA;" stylesheets="@../../css/user/TableUser.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.japs.frontend.bodyfitgym.controllers.affiliatemembership.AffiliateMembershipDetailViewController">
+   <children>
+      <Label layoutX="20.0" layoutY="18.0" text="Detalle de la Suscripción">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
+      <!-- Suscripción -->
+      <Pane layoutX="20.0" layoutY="55.0" prefHeight="230.0" prefWidth="720.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Suscripción">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-journal-check" iconSize="16" /></graphic>
+            </Label>
+
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Estado" />
+            <Label fx:id="statusValue" layoutX="16.0" layoutY="58.0" prefWidth="330.0" text="-">
+               <font><Font name="System Bold" size="12.0" /></font>
+            </Label>
+            <Label layoutX="370.0" layoutY="40.0" styleClass="formLabel" text="Congelada" />
+            <Label fx:id="frozenValue" layoutX="370.0" layoutY="58.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="88.0" styleClass="formLabel" text="Modo de seguimiento" />
+            <Label fx:id="trackingModeValue" layoutX="16.0" layoutY="106.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="88.0" styleClass="formLabel" text="Restantes" />
+            <Label fx:id="remainingUnitsValue" layoutX="370.0" layoutY="106.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="136.0" styleClass="formLabel" text="Fecha de inicio" />
+            <Label fx:id="startDateValue" layoutX="16.0" layoutY="154.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="136.0" styleClass="formLabel" text="Fecha de fin" />
+            <Label fx:id="endDateValue" layoutX="370.0" layoutY="154.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="184.0" styleClass="formLabel" text="Fecha de congelación" />
+            <Label fx:id="frozenAtValue" layoutX="16.0" layoutY="202.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="184.0" styleClass="formLabel" text="Fecha de creación" />
+            <Label fx:id="createdAtValue" layoutX="370.0" layoutY="202.0" prefWidth="330.0" text="-" />
+         </children>
+      </Pane>
+
+      <!-- Afiliado -->
+      <Pane layoutX="20.0" layoutY="295.0" prefHeight="190.0" prefWidth="720.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Afiliado">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-person-badge" iconSize="16" /></graphic>
+            </Label>
+
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Identificación" />
+            <Label fx:id="affiliateIdentificationValue" layoutX="16.0" layoutY="58.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="40.0" styleClass="formLabel" text="Nombre completo" />
+            <Label fx:id="affiliateNameValue" layoutX="370.0" layoutY="58.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="88.0" styleClass="formLabel" text="Celular" />
+            <Label fx:id="affiliateMobilePhoneValue" layoutX="16.0" layoutY="106.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="88.0" styleClass="formLabel" text="Email" />
+            <Label fx:id="affiliateEmailValue" layoutX="370.0" layoutY="106.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="136.0" styleClass="formLabel" text="Ciudad" />
+            <Label fx:id="affiliateCityValue" layoutX="16.0" layoutY="154.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="136.0" styleClass="formLabel" text="Estado del afiliado" />
+            <Label fx:id="affiliateStatusValue" layoutX="370.0" layoutY="154.0" prefWidth="330.0" text="-" />
+         </children>
+      </Pane>
+
+      <!-- Membresía -->
+      <Pane layoutX="20.0" layoutY="495.0" prefHeight="190.0" prefWidth="720.0" styleClass="section-card">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" styleClass="section-title" text="Membresía">
+               <graphic><FontIcon iconColor="#15803D" iconLiteral="bi-award" iconSize="16" /></graphic>
+            </Label>
+
+            <Label layoutX="16.0" layoutY="40.0" styleClass="formLabel" text="Nombre" />
+            <Label fx:id="membershipNameValue" layoutX="16.0" layoutY="58.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="40.0" styleClass="formLabel" text="Descripción" />
+            <Label fx:id="membershipDescriptionValue" layoutX="370.0" layoutY="58.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="88.0" styleClass="formLabel" text="Precio" />
+            <Label fx:id="membershipPriceValue" layoutX="16.0" layoutY="106.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="88.0" styleClass="formLabel" text="Duración" />
+            <Label fx:id="membershipDurationValue" layoutX="370.0" layoutY="106.0" prefWidth="330.0" text="-" />
+
+            <Label layoutX="16.0" layoutY="136.0" styleClass="formLabel" text="Modo de seguimiento" />
+            <Label fx:id="membershipTrackingModeValue" layoutX="16.0" layoutY="154.0" prefWidth="330.0" text="-" />
+            <Label layoutX="370.0" layoutY="136.0" styleClass="formLabel" text="Estado de la membresía" />
+            <Label fx:id="membershipStatusValue" layoutX="370.0" layoutY="154.0" prefWidth="330.0" text="-" />
+         </children>
+      </Pane>
+
+      <Button layoutX="638.0" layoutY="695.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="100.0" text="Cerrar">
+         <font><Font name="System Bold" size="12.0" /></font>
+         <styleClass>
+            <String fx:value="btnForm" />
+            <String fx:value="btnCancel" />
+         </styleClass>
+      </Button>
+   </children>
+</Pane>

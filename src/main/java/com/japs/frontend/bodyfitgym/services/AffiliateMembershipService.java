@@ -2,10 +2,8 @@ package com.japs.frontend.bodyfitgym.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.japs.frontend.bodyfitgym.models.DurationUnit;
-import com.japs.frontend.bodyfitgym.models.Membership;
-import com.japs.frontend.bodyfitgym.models.MembershipStatus;
-import com.japs.frontend.bodyfitgym.models.TrackingMode;
+import com.japs.frontend.bodyfitgym.models.AffiliateMembership;
+import com.japs.frontend.bodyfitgym.models.SubscriptionStatus;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.utils.ObjectMapperProvider;
@@ -18,13 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
-public class MembershipService {
-    private final Logger logger = LoggerFactory.getLogger(MembershipService.class);
-    private static final String API_URL = "http://localhost:8080/api/membership";
+public class AffiliateMembershipService {
+    private final Logger logger = LoggerFactory.getLogger(AffiliateMembershipService.class);
+    private static final String API_URL = "http://localhost:8080/api/affiliate-membership";
 
-    public ServiceResponse<PageResponse<Membership>> search(String name, DurationUnit durationUnit,
-                                                              TrackingMode trackingMode, MembershipStatus status,
-                                                              int page) {
+    public ServiceResponse<PageResponse<AffiliateMembership>> search(Long affiliateId, Long membershipId,
+                                                                       SubscriptionStatus status, int page) {
         String correlationId = UUID.randomUUID().toString();
         logger.info("correlationId: {} ", correlationId);
 
@@ -32,16 +29,15 @@ public class MembershipService {
             HttpResponse<JsonNode> response = Unirest.get(API_URL + "/search")
                     .header("X-Correlation-Id", correlationId)
                     .header("Authorization", Session.getAuthorizationHeader())
-                    .queryString("name", name)
-                    .queryString("durationUnit", durationUnit)
-                    .queryString("trackingMode", trackingMode)
+                    .queryString("affiliateId", affiliateId)
+                    .queryString("membershipId", membershipId)
                     .queryString("status", status)
                     .queryString("page", page)
                     .asJson();
 
-            ServiceResponse<PageResponse<Membership>> serviceResponse = ObjectMapperProvider.readValue(
+            ServiceResponse<PageResponse<AffiliateMembership>> serviceResponse = ObjectMapperProvider.readValue(
                     response.getBody().toString(),
-                    new TypeReference<ServiceResponse<PageResponse<Membership>>>() {}
+                    new TypeReference<ServiceResponse<PageResponse<AffiliateMembership>>>() {}
             );
             serviceResponse.setCode(response.getStatus());
 
@@ -51,7 +47,7 @@ public class MembershipService {
         } catch (Exception e) {
             logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
 
-            ServiceResponse<PageResponse<Membership>> errorResponse = new ServiceResponse<>();
+            ServiceResponse<PageResponse<AffiliateMembership>> errorResponse = new ServiceResponse<>();
             errorResponse.setCode(500);
             errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
 
@@ -59,42 +55,12 @@ public class MembershipService {
         }
     }
 
-    public ServiceResponse<Membership> findById(Long id) {
+    public ServiceResponse<AffiliateMembership> save(AffiliateMembership affiliateMembership) {
         String correlationId = UUID.randomUUID().toString();
         logger.info("correlationId: {} ", correlationId);
 
         try {
-            HttpResponse<JsonNode> response = Unirest.get(API_URL + "/find-by-id/" + id)
-                    .header("X-Correlation-Id", correlationId)
-                    .header("Authorization", Session.getAuthorizationHeader())
-                    .asJson();
-
-            ServiceResponse<Membership> serviceResponse = ObjectMapperProvider.readValue(
-                    response.getBody().toString(),
-                    new TypeReference<ServiceResponse<Membership>>() {}
-            );
-            serviceResponse.setCode(response.getStatus());
-
-            logger.info("correlationId: {}, response api: {}", correlationId, serviceResponse.toString());
-
-            return serviceResponse;
-        } catch (Exception e) {
-            logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
-
-            ServiceResponse<Membership> errorResponse = new ServiceResponse<>();
-            errorResponse.setCode(500);
-            errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
-
-            return errorResponse;
-        }
-    }
-
-    public ServiceResponse<Membership> save(Membership membership) {
-        String correlationId = UUID.randomUUID().toString();
-        logger.info("correlationId: {} ", correlationId);
-
-        try {
-            String body = ObjectMapperProvider.toJson(membership);
+            String body = ObjectMapperProvider.toJson(affiliateMembership);
 
             HttpResponse<JsonNode> response = Unirest.post(API_URL + "/save")
                     .header("Content-Type", "application/json")
@@ -103,9 +69,9 @@ public class MembershipService {
                     .body(body)
                     .asJson();
 
-            ServiceResponse<Membership> serviceResponse = ObjectMapperProvider.readValue(
+            ServiceResponse<AffiliateMembership> serviceResponse = ObjectMapperProvider.readValue(
                     response.getBody().toString(),
-                    new TypeReference<ServiceResponse<Membership>>() {}
+                    new TypeReference<ServiceResponse<AffiliateMembership>>() {}
             );
             serviceResponse.setCode(response.getStatus());
 
@@ -115,7 +81,7 @@ public class MembershipService {
         } catch (JsonProcessingException e) {
             logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
 
-            ServiceResponse<Membership> errorResponse = new ServiceResponse<>();
+            ServiceResponse<AffiliateMembership> errorResponse = new ServiceResponse<>();
             errorResponse.setCode(500);
             errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
 
@@ -123,33 +89,37 @@ public class MembershipService {
         }
     }
 
-    public ServiceResponse<Membership> update(Long id, Membership membership) {
+    public ServiceResponse<AffiliateMembership> freeze(Long id) {
+        return postAction(id, "/freeze/");
+    }
+
+    public ServiceResponse<AffiliateMembership> unfreeze(Long id) {
+        return postAction(id, "/unfreeze/");
+    }
+
+    private ServiceResponse<AffiliateMembership> postAction(Long id, String actionPath) {
         String correlationId = UUID.randomUUID().toString();
         logger.info("correlationId: {} ", correlationId);
 
         try {
-            String body = ObjectMapperProvider.toJson(membership);
-
-            HttpResponse<JsonNode> response = Unirest.put(API_URL + "/update/" + id)
-                    .header("Content-Type", "application/json")
+            HttpResponse<JsonNode> response = Unirest.post(API_URL + actionPath + id)
                     .header("X-Correlation-Id", correlationId)
                     .header("Authorization", Session.getAuthorizationHeader())
-                    .body(body)
                     .asJson();
 
-            ServiceResponse<Membership> serviceResponse = ObjectMapperProvider.readValue(
+            ServiceResponse<AffiliateMembership> serviceResponse = ObjectMapperProvider.readValue(
                     response.getBody().toString(),
-                    new TypeReference<ServiceResponse<Membership>>() {}
+                    new TypeReference<ServiceResponse<AffiliateMembership>>() {}
             );
             serviceResponse.setCode(response.getStatus());
 
             logger.info("correlationId: {}, response api: {}", correlationId, serviceResponse.toString());
 
             return serviceResponse;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
 
-            ServiceResponse<Membership> errorResponse = new ServiceResponse<>();
+            ServiceResponse<AffiliateMembership> errorResponse = new ServiceResponse<>();
             errorResponse.setCode(500);
             errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
 

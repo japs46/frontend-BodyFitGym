@@ -113,4 +113,9 @@ public class MainViewController implements Initializable {
     private void cambiarVistaAfiliado(MouseEvent event) {
         cargarVista("/templates/affiliate/AffiliateListView.fxml");
     }
+
+    @FXML
+    private void cambiarVistaAfiliacion(MouseEvent event) {
+        cargarVista("/templates/affiliatemembership/AffiliateMembershipListView.fxml");
+    }
 }
