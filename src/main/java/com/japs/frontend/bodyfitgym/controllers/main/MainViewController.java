@@ -142,4 +142,9 @@ public class MainViewController implements Initializable {
     private void cambiarVistaProducto(MouseEvent event) {
         cargarVista("/templates/product/ProductListView.fxml");
     }
+
+    @FXML
+    private void cambiarVistaVenta(MouseEvent event) {
+        cargarVista("/templates/sale/SaleListView.fxml");
+    }
 }

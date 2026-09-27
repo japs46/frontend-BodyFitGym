@@ -53,6 +53,36 @@ public class ProductService {
         }
     }
 
+    public ServiceResponse<Product> findById(Long id) {
+        String correlationId = UUID.randomUUID().toString();
+        logger.info("correlationId: {} ", correlationId);
+
+        try {
+            HttpResponse<JsonNode> response = Unirest.get(API_URL + "/find-by-id/" + id)
+                    .header("X-Correlation-Id", correlationId)
+                    .header("Authorization", Session.getAuthorizationHeader())
+                    .asJson();
+
+            ServiceResponse<Product> serviceResponse = ObjectMapperProvider.readValue(
+                    response.getBody().toString(),
+                    new TypeReference<ServiceResponse<Product>>() {}
+            );
+            serviceResponse.setCode(response.getStatus());
+
+            logger.info("correlationId: {}, response api: {}", correlationId, serviceResponse.toString());
+
+            return serviceResponse;
+        } catch (Exception e) {
+            logger.error("correlationId: {}, error: {}", correlationId, e.getMessage());
+
+            ServiceResponse<Product> errorResponse = new ServiceResponse<>();
+            errorResponse.setCode(500);
+            errorResponse.setMessage("Error al conectar con el servicio: " + e.getMessage());
+
+            return errorResponse;
+        }
+    }
+
     public ServiceResponse<Product> save(Product product) {
         String correlationId = UUID.randomUUID().toString();
         logger.info("correlationId: {} ", correlationId);
