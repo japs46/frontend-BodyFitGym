@@ -21,8 +21,10 @@ import javafx.stage.Stage;
 
 import com.japs.frontend.bodyfitgym.controllers.affiliate.AffiliateUpdateViewController;
 import com.japs.frontend.bodyfitgym.controllers.membership.MembershipUpdateViewController;
+import com.japs.frontend.bodyfitgym.controllers.product.ProductUpdateViewController;
 import com.japs.frontend.bodyfitgym.models.Affiliate;
 import com.japs.frontend.bodyfitgym.models.Membership;
+import com.japs.frontend.bodyfitgym.models.Product;
 import com.japs.frontend.bodyfitgym.utils.Session;
 
 /**
@@ -84,6 +86,18 @@ public class MainViewController implements Initializable {
         }
     }
 
+    public void cargarVistaProductUpdate(Product product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/product/ProductUpdateView.fxml"));
+            Parent vista = loader.load();
+            ProductUpdateViewController controller = loader.getController();
+            controller.setProduct(product);
+            stakPane.getChildren().setAll(vista);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void logOut(MouseEvent event) {
         try {
@@ -122,5 +136,10 @@ public class MainViewController implements Initializable {
     @FXML
     private void cambiarVistaAsistencia(MouseEvent event) {
         cargarVista("/templates/attendance/AttendanceListView.fxml");
+    }
+
+    @FXML
+    private void cambiarVistaProducto(MouseEvent event) {
+        cargarVista("/templates/product/ProductListView.fxml");
     }
 }
