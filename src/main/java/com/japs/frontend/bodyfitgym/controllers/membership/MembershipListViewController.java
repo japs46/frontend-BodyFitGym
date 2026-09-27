@@ -2,6 +2,7 @@ package com.japs.frontend.bodyfitgym.controllers.membership;
 
 import com.japs.frontend.bodyfitgym.controllers.main.MainViewController;
 import com.japs.frontend.bodyfitgym.models.Membership;
+import com.japs.frontend.bodyfitgym.models.MembershipStatus;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.services.MembershipService;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -42,6 +44,8 @@ public class MembershipListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private ComboBox<String> statusFilterCombo;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -56,15 +60,16 @@ public class MembershipListViewController implements Initializable {
     private final MembershipService membershipService = new MembershipService();
 
     private String currentName = null;
+    private MembershipStatus currentStatus = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pagination.currentPageIndexProperty().addListener((observable) ->
-                listMemberships(currentName, pagination.getCurrentPageIndex()));
+                listMemberships(currentName, currentStatus, pagination.getCurrentPageIndex()));
         configureColumns();
         configureRowFactory();
         applyRolePermissions();
-        listMemberships(null, 0);
+        listMemberships(null, null, 0);
     }
 
     private void configureColumns() {
@@ -104,10 +109,10 @@ public class MembershipListViewController implements Initializable {
         deleteMenuItem.setDisable(!canDelete);
     }
 
-    private void listMemberships(String name, int page) {
+    private void listMemberships(String name, MembershipStatus status, int page) {
         membershipList.clear();
 
-        ServiceResponse<PageResponse<Membership>> serviceResponse = membershipService.search(name, null, null, null, page);
+        ServiceResponse<PageResponse<Membership>> serviceResponse = membershipService.search(name, null, null, status, page);
 
         if (serviceResponse.getCode() == 200) {
             PageResponse<Membership> pageResponse = serviceResponse.getData();
@@ -124,9 +129,11 @@ public class MembershipListViewController implements Initializable {
     }
 
     @FXML
-    private void searchMembership(ActionEvent event) {
+    private void applyFilters(ActionEvent event) {
         currentName = fieldSearch.getText();
-        listMemberships(currentName, 0);
+        String statusValue = statusFilterCombo.getValue();
+        currentStatus = (statusValue == null || "Todas".equals(statusValue)) ? null : MembershipStatus.valueOf(statusValue);
+        listMemberships(currentName, currentStatus, 0);
     }
 
     @FXML
@@ -161,7 +168,7 @@ public class MembershipListViewController implements Initializable {
         ServiceResponse<Void> serviceResponse = membershipService.delete(selected.getId());
         if (serviceResponse.getCode() == 200) {
             AlertUtils.showSuccess("Membresía eliminada con éxito.");
-            listMemberships(currentName, pagination.getCurrentPageIndex());
+            listMemberships(currentName, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(serviceResponse.getMessage() != null
                     ? serviceResponse.getMessage()

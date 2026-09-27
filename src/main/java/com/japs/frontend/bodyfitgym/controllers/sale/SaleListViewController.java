@@ -4,6 +4,7 @@ import com.japs.frontend.bodyfitgym.controllers.main.MainViewController;
 import com.japs.frontend.bodyfitgym.models.Affiliate;
 import com.japs.frontend.bodyfitgym.models.Product;
 import com.japs.frontend.bodyfitgym.models.Sale;
+import com.japs.frontend.bodyfitgym.models.SaleStatus;
 import com.japs.frontend.bodyfitgym.models.SaleType;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
@@ -19,6 +20,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -29,6 +32,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +65,14 @@ public class SaleListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private ComboBox<String> typeFilterCombo;
+    @FXML
+    private ComboBox<String> statusFilterCombo;
+    @FXML
+    private DatePicker dateFromPicker;
+    @FXML
+    private DatePicker dateToPicker;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -86,7 +99,7 @@ public class SaleListViewController implements Initializable {
         configureColumns();
         configureRowFactory();
         applyRolePermissions();
-        listAllSales(0);
+        listWithFilters(0);
     }
 
     private void configureRowFactory() {
@@ -161,23 +174,23 @@ public class SaleListViewController implements Initializable {
     }
 
     private void loadCurrentPage() {
-        if (currentAffiliateId != null) {
-            listByAffiliate(currentAffiliateId, pagination.getCurrentPageIndex());
-        } else {
-            listAllSales(pagination.getCurrentPageIndex());
-        }
+        listWithFilters(pagination.getCurrentPageIndex());
     }
 
-    private void listAllSales(int page) {
+    private void listWithFilters(int page) {
+        SaleType type = comboValue(typeFilterCombo, "Todos", SaleType::valueOf);
+        SaleStatus status = comboValue(statusFilterCombo, "Todos", SaleStatus::valueOf);
+        LocalDateTime dateFrom = dateFromPicker.getValue() != null ? dateFromPicker.getValue().atStartOfDay() : null;
+        LocalDateTime dateTo = dateToPicker.getValue() != null ? dateToPicker.getValue().atTime(LocalTime.MAX) : null;
+
         ServiceResponse<PageResponse<Sale>> serviceResponse =
-                saleService.search(null, null, null, null, null, page);
+                saleService.search(currentAffiliateId, type, status, dateFrom, dateTo, page);
         applyResult(serviceResponse);
     }
 
-    private void listByAffiliate(Long affiliateId, int page) {
-        ServiceResponse<PageResponse<Sale>> serviceResponse =
-                saleService.search(affiliateId, null, null, null, null, page);
-        applyResult(serviceResponse);
+    private <T> T comboValue(ComboBox<String> combo, String allLabel, java.util.function.Function<String, T> parser) {
+        String value = combo.getValue();
+        return (value == null || allLabel.equals(value)) ? null : parser.apply(value);
     }
 
     private void applyResult(ServiceResponse<PageResponse<Sale>> serviceResponse) {
@@ -198,18 +211,18 @@ public class SaleListViewController implements Initializable {
     }
 
     @FXML
-    private void searchSale(ActionEvent event) {
+    private void applyFilters(ActionEvent event) {
         String identification = fieldSearch.getText();
         if (identification == null || identification.isBlank()) {
             currentAffiliateId = null;
-            listAllSales(0);
+            listWithFilters(0);
             return;
         }
 
         ServiceResponse<PageResponse<Affiliate>> affiliateResponse = affiliateService.search(identification, null, null, 0);
         if (affiliateResponse.getCode() == 200 && !affiliateResponse.getData().getContent().isEmpty()) {
             currentAffiliateId = affiliateResponse.getData().getContent().get(0).getId();
-            listByAffiliate(currentAffiliateId, 0);
+            listWithFilters(0);
         } else {
             AlertUtils.showWarning("No se encontró ningún afiliado con esa identificación.");
             saleList.clear();

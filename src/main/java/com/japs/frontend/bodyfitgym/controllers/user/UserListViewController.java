@@ -53,13 +53,11 @@ public class UserListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
-    private ComboBox<String> checkBoxFilter;
-    @FXML
     private Pagination pagination;
     @FXML
     private TableColumn<?, ?> actionsColumn;
     @FXML
-    private ComboBox<?> filterComboBox;
+    private ComboBox<String> filterComboBox;
 
     /**
      * Initializes the controller class.
@@ -114,7 +112,7 @@ public class UserListViewController implements Initializable {
 
     @FXML
     private void searchUser(ActionEvent event) {
-        String searchCriteria =checkBoxFilter.getSelectionModel().getSelectedItem();
+        String searchCriteria = filterComboBox.getSelectionModel().getSelectedItem();
 
         switch (searchCriteria){
             case null -> {

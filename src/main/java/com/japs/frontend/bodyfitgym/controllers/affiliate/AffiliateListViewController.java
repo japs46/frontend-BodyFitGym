@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -49,6 +50,10 @@ public class AffiliateListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private ComboBox<String> searchByCombo;
+    @FXML
+    private ComboBox<String> statusFilterCombo;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -63,15 +68,17 @@ public class AffiliateListViewController implements Initializable {
     private final AffiliateService affiliateService = new AffiliateService();
 
     private String currentIdentification = null;
+    private String currentName = null;
+    private String currentStatus = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pagination.currentPageIndexProperty().addListener((observable) ->
-                listAffiliates(currentIdentification, pagination.getCurrentPageIndex()));
+                listAffiliates(currentIdentification, currentName, currentStatus, pagination.getCurrentPageIndex()));
         configureColumns();
         configureRowFactory();
         applyRolePermissions();
-        listAffiliates(null, 0);
+        listAffiliates(null, null, null, 0);
     }
 
     private void configureColumns() {
@@ -116,10 +123,10 @@ public class AffiliateListViewController implements Initializable {
         deleteMenuItem.setDisable(!canDelete);
     }
 
-    private void listAffiliates(String identification, int page) {
+    private void listAffiliates(String identification, String name, String status, int page) {
         affiliateList.clear();
 
-        ServiceResponse<PageResponse<Affiliate>> serviceResponse = affiliateService.search(identification, null, null, page);
+        ServiceResponse<PageResponse<Affiliate>> serviceResponse = affiliateService.search(identification, name, status, page);
 
         if (serviceResponse.getCode() == 200) {
             PageResponse<Affiliate> pageResponse = serviceResponse.getData();
@@ -136,9 +143,19 @@ public class AffiliateListViewController implements Initializable {
     }
 
     @FXML
-    private void searchAffiliate(ActionEvent event) {
-        currentIdentification = fieldSearch.getText();
-        listAffiliates(currentIdentification, 0);
+    private void applyFilters(ActionEvent event) {
+        String searchText = fieldSearch.getText();
+        if ("Nombre".equals(searchByCombo.getValue())) {
+            currentName = searchText;
+            currentIdentification = null;
+        } else {
+            currentIdentification = searchText;
+            currentName = null;
+        }
+
+        String statusValue = statusFilterCombo.getValue();
+        currentStatus = (statusValue == null || "Todos".equals(statusValue)) ? null : statusValue;
+        listAffiliates(currentIdentification, currentName, currentStatus, 0);
     }
 
     @FXML
@@ -198,7 +215,7 @@ public class AffiliateListViewController implements Initializable {
         ServiceResponse<Void> serviceResponse = affiliateService.delete(selected.getId());
         if (serviceResponse.getCode() == 200) {
             AlertUtils.showSuccess("Afiliado eliminado con éxito.");
-            listAffiliates(currentIdentification, pagination.getCurrentPageIndex());
+            listAffiliates(currentIdentification, currentName, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(serviceResponse.getMessage() != null
                     ? serviceResponse.getMessage()

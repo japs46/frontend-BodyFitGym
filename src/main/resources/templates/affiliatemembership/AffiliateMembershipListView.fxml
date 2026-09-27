@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
@@ -63,11 +66,17 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-             <TextField fx:id="fieldSearch" layoutX="464.0" layoutY="23.0" onAction="#searchAffiliateMembership" prefHeight="35.0" prefWidth="150.0" promptText="Identificación del afiliado..." styleClass="search-field">
+             <TextField fx:id="fieldSearch" layoutX="464.0" layoutY="23.0" onAction="#applyFilters" prefHeight="35.0" prefWidth="150.0" promptText="Identificación del afiliado..." styleClass="search-field">
                  <padding>
                      <Insets left="25.0" />
                  </padding>
              </TextField>
+
+             <ComboBox fx:id="statusFilterCombo" layoutX="290.0" layoutY="23.0" onAction="#applyFilters" prefHeight="35.0" prefWidth="140.0" value="Todas">
+                 <items><FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Todas" /><String fx:value="ACTIVA" /><String fx:value="INACTIVA" />
+                 </FXCollections></items>
+             </ComboBox>
 
              <Button fx:id="registerButton" layoutX="780.0" layoutY="21.0" mnemonicParsing="false" onAction="#showAffiliateMembershipCreateView" prefHeight="35.0" prefWidth="161.0" styleClass="btn-register" text="Registrar Suscripción">
                  <graphic>
