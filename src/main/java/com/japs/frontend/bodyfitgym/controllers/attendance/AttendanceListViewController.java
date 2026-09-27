@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +46,10 @@ public class AttendanceListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private DatePicker dateFromPicker;
+    @FXML
+    private DatePicker dateToPicker;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -66,7 +71,12 @@ public class AttendanceListViewController implements Initializable {
         pagination.currentPageIndexProperty().addListener((observable) -> loadCurrentPage());
         configureColumns();
         applyRolePermissions();
-        listTodayAttendances();
+
+        LocalDate today = LocalDate.now();
+        dateFromPicker.setValue(today);
+        dateToPicker.setValue(today);
+
+        listWithFilters(0);
     }
 
     private void configureColumns() {
@@ -102,28 +112,12 @@ public class AttendanceListViewController implements Initializable {
     }
 
     private void loadCurrentPage() {
-        if (currentAffiliateId != null) {
-            listByAffiliate(currentAffiliateId, pagination.getCurrentPageIndex());
-        } else {
-            listToday(pagination.getCurrentPageIndex());
-        }
+        listWithFilters(pagination.getCurrentPageIndex());
     }
 
-    private void listTodayAttendances() {
-        currentAffiliateId = null;
-        listToday(0);
-    }
-
-    private void listToday(int page) {
-        LocalDate today = LocalDate.now();
+    private void listWithFilters(int page) {
         ServiceResponse<PageResponse<Attendance>> serviceResponse =
-                attendanceService.search(null, today, today, page);
-        applyResult(serviceResponse);
-    }
-
-    private void listByAffiliate(Long affiliateId, int page) {
-        ServiceResponse<PageResponse<Attendance>> serviceResponse =
-                attendanceService.search(affiliateId, null, null, page);
+                attendanceService.search(currentAffiliateId, dateFromPicker.getValue(), dateToPicker.getValue(), page);
         applyResult(serviceResponse);
     }
 
@@ -145,17 +139,18 @@ public class AttendanceListViewController implements Initializable {
     }
 
     @FXML
-    private void searchAttendance(ActionEvent event) {
+    private void applyFilters(ActionEvent event) {
         String identification = fieldSearch.getText();
         if (identification == null || identification.isBlank()) {
-            listTodayAttendances();
+            currentAffiliateId = null;
+            listWithFilters(0);
             return;
         }
 
         ServiceResponse<PageResponse<Affiliate>> affiliateResponse = affiliateService.search(identification, null, null, 0);
         if (affiliateResponse.getCode() == 200 && !affiliateResponse.getData().getContent().isEmpty()) {
             currentAffiliateId = affiliateResponse.getData().getContent().get(0).getId();
-            listByAffiliate(currentAffiliateId, 0);
+            listWithFilters(0);
         } else {
             AlertUtils.showWarning("No se encontró ningún afiliado con esa identificación.");
             attendanceList.clear();

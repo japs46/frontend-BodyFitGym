@@ -2,6 +2,7 @@ package com.japs.frontend.bodyfitgym.controllers.product;
 
 import com.japs.frontend.bodyfitgym.controllers.main.MainViewController;
 import com.japs.frontend.bodyfitgym.models.Product;
+import com.japs.frontend.bodyfitgym.models.ProductStatus;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.services.ProductService;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -41,6 +43,8 @@ public class ProductListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private ComboBox<String> statusFilterCombo;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -55,15 +59,16 @@ public class ProductListViewController implements Initializable {
     private final ProductService productService = new ProductService();
 
     private String currentName = null;
+    private ProductStatus currentStatus = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pagination.currentPageIndexProperty().addListener((observable) ->
-                listProducts(currentName, pagination.getCurrentPageIndex()));
+                listProducts(currentName, currentStatus, pagination.getCurrentPageIndex()));
         configureColumns();
         configureRowFactory();
         applyRolePermissions();
-        listProducts(null, 0);
+        listProducts(null, null, 0);
     }
 
     private void configureColumns() {
@@ -99,10 +104,10 @@ public class ProductListViewController implements Initializable {
         deleteMenuItem.setDisable(!canManage);
     }
 
-    private void listProducts(String name, int page) {
+    private void listProducts(String name, ProductStatus status, int page) {
         productList.clear();
 
-        ServiceResponse<PageResponse<Product>> serviceResponse = productService.search(name, null, page);
+        ServiceResponse<PageResponse<Product>> serviceResponse = productService.search(name, status, page);
 
         if (serviceResponse.getCode() == 200) {
             PageResponse<Product> pageResponse = serviceResponse.getData();
@@ -119,9 +124,11 @@ public class ProductListViewController implements Initializable {
     }
 
     @FXML
-    private void searchProduct(ActionEvent event) {
+    private void applyFilters(ActionEvent event) {
         currentName = fieldSearch.getText();
-        listProducts(currentName, 0);
+        String statusValue = statusFilterCombo.getValue();
+        currentStatus = (statusValue == null || "Todos".equals(statusValue)) ? null : ProductStatus.valueOf(statusValue);
+        listProducts(currentName, currentStatus, 0);
     }
 
     @FXML
@@ -156,7 +163,7 @@ public class ProductListViewController implements Initializable {
         ServiceResponse<Void> serviceResponse = productService.delete(selected.getId());
         if (serviceResponse.getCode() == 200) {
             AlertUtils.showSuccess("Producto eliminado con éxito.");
-            listProducts(currentName, pagination.getCurrentPageIndex());
+            listProducts(currentName, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(serviceResponse.getMessage() != null
                     ? serviceResponse.getMessage()

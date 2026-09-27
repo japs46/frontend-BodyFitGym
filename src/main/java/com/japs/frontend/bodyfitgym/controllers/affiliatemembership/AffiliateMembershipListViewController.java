@@ -4,6 +4,7 @@ import com.japs.frontend.bodyfitgym.controllers.main.MainViewController;
 import com.japs.frontend.bodyfitgym.models.Affiliate;
 import com.japs.frontend.bodyfitgym.models.AffiliateMembership;
 import com.japs.frontend.bodyfitgym.models.Membership;
+import com.japs.frontend.bodyfitgym.models.SubscriptionStatus;
 import com.japs.frontend.bodyfitgym.response.PageResponse;
 import com.japs.frontend.bodyfitgym.response.ServiceResponse;
 import com.japs.frontend.bodyfitgym.services.AffiliateMembershipService;
@@ -21,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -58,6 +60,8 @@ public class AffiliateMembershipListViewController implements Initializable {
     @FXML
     private TextField fieldSearch;
     @FXML
+    private ComboBox<String> statusFilterCombo;
+    @FXML
     private FontIcon iconSearch;
     @FXML
     private Pagination pagination;
@@ -81,15 +85,16 @@ public class AffiliateMembershipListViewController implements Initializable {
     private final Map<Long, String> membershipNameCache = new HashMap<>();
 
     private Long currentAffiliateId = null;
+    private SubscriptionStatus currentStatus = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pagination.currentPageIndexProperty().addListener((observable) ->
-                listAffiliateMemberships(currentAffiliateId, pagination.getCurrentPageIndex()));
+                listAffiliateMemberships(currentAffiliateId, currentStatus, pagination.getCurrentPageIndex()));
         configureColumns();
         configureRowFactory();
         applyRolePermissions();
-        listAffiliateMemberships(null, 0);
+        listAffiliateMemberships(null, null, 0);
     }
 
     private void configureColumns() {
@@ -163,11 +168,11 @@ public class AffiliateMembershipListViewController implements Initializable {
         deleteMenuItem.setDisable(!canDelete);
     }
 
-    private void listAffiliateMemberships(Long affiliateId, int page) {
+    private void listAffiliateMemberships(Long affiliateId, SubscriptionStatus status, int page) {
         affiliateMembershipList.clear();
 
         ServiceResponse<PageResponse<AffiliateMembership>> serviceResponse =
-                affiliateMembershipService.search(affiliateId, null, null, page);
+                affiliateMembershipService.search(affiliateId, null, status, page);
 
         if (serviceResponse.getCode() == 200) {
             PageResponse<AffiliateMembership> pageResponse = serviceResponse.getData();
@@ -184,18 +189,21 @@ public class AffiliateMembershipListViewController implements Initializable {
     }
 
     @FXML
-    private void searchAffiliateMembership(ActionEvent event) {
+    private void applyFilters(ActionEvent event) {
+        String statusValue = statusFilterCombo.getValue();
+        currentStatus = (statusValue == null || "Todas".equals(statusValue)) ? null : SubscriptionStatus.valueOf(statusValue);
+
         String identification = fieldSearch.getText();
         if (identification == null || identification.isBlank()) {
             currentAffiliateId = null;
-            listAffiliateMemberships(null, 0);
+            listAffiliateMemberships(null, currentStatus, 0);
             return;
         }
 
         ServiceResponse<PageResponse<Affiliate>> affiliateResponse = affiliateService.search(identification, null, null, 0);
         if (affiliateResponse.getCode() == 200 && !affiliateResponse.getData().getContent().isEmpty()) {
             currentAffiliateId = affiliateResponse.getData().getContent().get(0).getId();
-            listAffiliateMemberships(currentAffiliateId, 0);
+            listAffiliateMemberships(currentAffiliateId, currentStatus, 0);
         } else {
             AlertUtils.showWarning("No se encontró ningún afiliado con esa identificación.");
             affiliateMembershipList.clear();
@@ -251,7 +259,7 @@ public class AffiliateMembershipListViewController implements Initializable {
         ServiceResponse<AffiliateMembership> response = affiliateMembershipService.freeze(selected.getId());
         if (response.getCode() == 200) {
             AlertUtils.showSuccess("Suscripción congelada exitosamente.");
-            listAffiliateMemberships(currentAffiliateId, pagination.getCurrentPageIndex());
+            listAffiliateMemberships(currentAffiliateId, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(response.getMessage() != null ? response.getMessage() : "No se pudo congelar la suscripción.");
         }
@@ -268,7 +276,7 @@ public class AffiliateMembershipListViewController implements Initializable {
         ServiceResponse<AffiliateMembership> response = affiliateMembershipService.unfreeze(selected.getId());
         if (response.getCode() == 200) {
             AlertUtils.showSuccess("Suscripción reanudada exitosamente.");
-            listAffiliateMemberships(currentAffiliateId, pagination.getCurrentPageIndex());
+            listAffiliateMemberships(currentAffiliateId, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(response.getMessage() != null ? response.getMessage() : "No se pudo reanudar la suscripción.");
         }
@@ -290,7 +298,7 @@ public class AffiliateMembershipListViewController implements Initializable {
         ServiceResponse<Void> response = affiliateMembershipService.delete(selected.getId());
         if (response.getCode() == 200) {
             AlertUtils.showSuccess("Suscripción eliminada con éxito.");
-            listAffiliateMemberships(currentAffiliateId, pagination.getCurrentPageIndex());
+            listAffiliateMemberships(currentAffiliateId, currentStatus, pagination.getCurrentPageIndex());
         } else {
             AlertUtils.showError(response.getMessage() != null ? response.getMessage() : "No se pudo eliminar la suscripción.");
         }
