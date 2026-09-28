@@ -17,13 +17,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 public class AffiliateMembershipCreateViewController implements Initializable {
@@ -37,7 +37,7 @@ public class AffiliateMembershipCreateViewController implements Initializable {
     @FXML
     private ComboBox<Membership> membershipCombo;
     @FXML
-    private TextField startDateField;
+    private DatePicker startDatePicker;
     @FXML
     private Button saveButton;
 
@@ -50,6 +50,7 @@ public class AffiliateMembershipCreateViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadActiveMemberships();
+        startDatePicker.setValue(LocalDate.now());
         membershipCombo.setConverter(new StringConverter<>() {
             @Override
             public String toString(Membership membership) {
@@ -106,21 +107,10 @@ public class AffiliateMembershipCreateViewController implements Initializable {
             return;
         }
 
-        LocalDate startDate = null;
-        String startDateText = startDateField.getText();
-        if (startDateText != null && !startDateText.isBlank()) {
-            try {
-                startDate = LocalDate.parse(startDateText.trim());
-            } catch (DateTimeParseException e) {
-                AlertUtils.showWarning("La fecha de inicio debe tener el formato aaaa-mm-dd.");
-                return;
-            }
-        }
-
         AffiliateMembership affiliateMembership = new AffiliateMembership();
         affiliateMembership.setAffiliateId(foundAffiliate.getId());
         affiliateMembership.setMembershipId(selectedMembership.getId());
-        affiliateMembership.setStartDate(startDate);
+        affiliateMembership.setStartDate(startDatePicker.getValue());
 
         ServiceResponse<AffiliateMembership> response = affiliateMembershipService.save(affiliateMembership);
 
